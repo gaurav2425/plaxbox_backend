@@ -14,11 +14,17 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.12.2",
+    "firebase-admin": "^10.0.1",
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.9",
+    "mongoose": "^6.0.14",
+    "nodemailer": "^6.7.2",
     "nodemon": "^2.0.13",
     "request": "^2.88.2",
-    "socket.io": "^4.2.0"
+    "socket.io": "^4.3.2",
+    "socket.io-client": "^4.3.2",
+    "speakeasy": "^2.0.0",
+    "two-step-auth": "^1.1.2",
+    "uuid": "^8.3.2"
   }
 }

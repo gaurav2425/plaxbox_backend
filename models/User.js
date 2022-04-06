@@ -5,6 +5,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -14,27 +18,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  username: {
+  dob: {
     type: String,
     required: true,
   },
   avatar: {
     type: String,
   },
-  status: {
-    type: String,
-  },
-  friends: {
-    type: Array,
-  },
-  Pendingfriends: {
-    type: Array,
-    default: [],
-  },
-  RequestSent: {
-    type: Array,
-    default: [],
-  },
+
   date: {
     type: Date,
     default: Date.now,
@@ -42,3 +33,18 @@ const UserSchema = new mongoose.Schema({
 });
 
 module.exports = User = mongoose.model("user", UserSchema);
+
+// status: {
+//   type: String,
+// },
+// friends: {
+//   type: Array,
+// },
+// Pendingfriends: {
+//   type: Array,
+//   default: [],
+// },
+// RequestSent: {
+//   type: Array,
+//   default: [],
+// },

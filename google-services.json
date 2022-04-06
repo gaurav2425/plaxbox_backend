@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "388911307516",
+    "project_id": "slack-4b5d0",
+    "storage_bucket": "slack-4b5d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388911307516:android:932c1fa09e1b5627a71579",
+        "android_client_info": {
+          "package_name": "com.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388911307516-206vr9v1h8ucjqvt4g37bm91oqlr4jmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwrePxSsP-3pVAMynda90pflOSDnLhiKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388911307516-206vr9v1h8ucjqvt4g37bm91oqlr4jmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

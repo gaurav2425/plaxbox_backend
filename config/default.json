@@ -1,4 +1,4 @@
 {
-    "mongoURI":"mongodb+srv://admin:gaurav2184@cluster0.9mvsd.mongodb.net/SpanCock?retryWrites=true&w=majority",
+    "mongoURI":"mongodb+srv://admin:gaurav54321@cluster0.9mvsd.mongodb.net/SpanCock?retryWrites=true&w=majority",
     "jwtSecret":"mysecretjwttoken"
 }

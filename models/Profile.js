@@ -31,6 +31,9 @@ const ProfileSchema = new mongoose.Schema({
   Notifications: {
     type: Array,
   },
+  mobiletoken: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,

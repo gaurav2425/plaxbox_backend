@@ -66,10 +66,11 @@ router.post(
 
 router.get("/myprofileinfo", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["name", "avatar"]
-    );
+    const profile = await Profile.findOne({ user: req.user.id });
+    // .populate(
+    //   "user",
+    //   ["name", "avatar"]
+    // );
 
     // if (!profile) {
     //   return res.status(400).json({ msg: "There is no profile for this user" });
@@ -101,12 +102,55 @@ router.get("/:profileId", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get("/users/all", auth, async (req, res) => {
+  try {
+    const mine = await Profile.findOne({ user: req.user.id }).select(
+      "-PendingFriends -password -RequestSent -Notifications -Friends"
+    );
+    console.log(mine);
+    // res.json(mine);
+    const User1 = await Profile.find();
+    // res.status(200).json(User1);
+    // const user = await User.findById(req.user.id).select("-password");
+    res.json(User1);
+    console.log(User1);
+  } catch (err) {
+    res.status(500).json(err);
+    // console.log(err);
+  }
+});
 
-// profileFields = {};
-//     if (name) {
-//       profileFields.name = name;
-//     }
-//     if (username) {
-//       profileFields.username = username;
-//     }
+router.post("/token/mobiletoken", auth, async (req, res) => {
+  try {
+    const mine = await Profile.findOne({ user: req.user.id }).select(
+      "-PendingFriends -password -RequestSent -Notifications -Friends"
+    );
+    console.log(mine);
+
+    const { mobiletoken } = req.body;
+
+    const mine1 = await Profile.findOneAndUpdate(
+      { user: req.user.id },
+      {
+        mobiletoken: mobiletoken,
+      }
+    );
+    console.log(mine1);
+    res.json(mine1);
+    // res.json(mine);
+    // const User1 = await Profile.find();
+    // res.status(200).json(User1);
+    // const user = await User.findById(req.user.id).select("-password");
+    // res.json(mine);
+    // console.log(User1);
+  } catch (err) {
+    res.status(500).json(err);
+    // console.log(err);
+  }
+});
+
+// router.post("/upload/profilepic",(req,res)=>{
+
+// })
+
+module.exports = router;

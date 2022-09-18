@@ -382,7 +382,9 @@ router.post("/:userId/addfriendrequest", auth, async (req, res) => {
     } else {
       const mine = await Profile.findOne({
         user: req.user.id,
-      }).select("-RequestSent -Notifications -PendingFriends -Friends");
+      }).select(
+        "-RequestSent -Notifications -PendingFriends -Friends -name -username"
+      );
 
       // console.log(mine);
 
@@ -393,6 +395,20 @@ router.post("/:userId/addfriendrequest", auth, async (req, res) => {
         {
           $addToSet: {
             PendingFriends: [mine],
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      const updatedfriend1 = await Profile.findOneAndUpdate(
+        {
+          user: req.params.userId,
+        },
+        {
+          $addToSet: {
+            Followers: [mine],
           },
         },
         {
@@ -421,6 +437,20 @@ router.post("/:userId/addfriendrequest", auth, async (req, res) => {
         {
           $addToSet: {
             RequestSent: [frienduser],
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      const mineupdated1 = await Profile.findOneAndUpdate(
+        {
+          user: req.user.id,
+        },
+        {
+          $addToSet: {
+            Following: [frienduser],
           },
         },
         {
@@ -717,6 +747,42 @@ router.get("/:userId/readmessage", auth, async (req, res) => {
         { users: { $eq: [req.user.id, req.params.userId] } },
       ],
     });
+    console.log(mine);
+    res.json(mine);
+  } catch (err) {
+    console.error(err.message);
+    res.json(err);
+  }
+});
+
+router.put("/readmessage", auth, async (req, res) => {
+  try {
+    // const chats = new Message({
+    //   senderId: req.user.id,
+    //   receiverId: req.params.userId,
+    //   message: req.body.message,
+    // });
+
+    // const savemsg = await chats.save();
+
+    const { userId } = req.body;
+
+    const mine = await Message.find({
+      $or: [
+        { senderId: req.user.id, receiverId: userId },
+        { senderId: userId, receiverId: req.user.id },
+      ],
+    });
+
+    // const mine = await Message.findOne({
+    //   $or: [
+    //     { senderId: { $eq: userId } },
+    //     { senderId: { $eq: req.user.id } },
+    //     { receiverId: { $eq: userId } },
+    //     { receiverId: { $eq: req.user.id } },
+    //   ],
+    // });
+
     console.log(mine);
     res.json(mine);
   } catch (err) {

@@ -28,6 +28,12 @@ const ProfileSchema = new mongoose.Schema({
   RequestSent: {
     type: Array,
   },
+  Followers: {
+    type: Array,
+  },
+  Following: {
+    type: Array,
+  },
   Notifications: {
     type: Array,
   },

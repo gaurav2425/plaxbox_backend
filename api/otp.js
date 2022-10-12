@@ -7,6 +7,10 @@ const Speakeasy = require("speakeasy");
 const xoauth2 = require("xoauth2");
 const uuid = require("uuid");
 
+require("dotenv").config();
+
+const sgMail = require("@sendgrid/mail");
+
 const CLIENT_ID =
   "985685462889-gd17k4qq5ngi5mapujcq0tshnl8h64p4.apps.googleusercontent.com";
 const CLEINT_SECRET = "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";
@@ -21,15 +25,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-router.post("/sendotp", (req, res) => {
-  let mailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "techxiosmedia@gmail.com",
-      pass: "techxios21847335",
-    },
-  });
-
+router.post("/sendotp", (request, res) => {
   let userid = uuid.v4();
   // console.log("Tried");
   //   let path = `user/${userid}`;
@@ -48,25 +44,28 @@ router.post("/sendotp", (req, res) => {
     }),
   });
 
+  sgMail.setApiKey(
+    "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"
+  );
+
   let mailDetails = {
-    from: "techxiosmedia@gmail.com",
-    to: "gauravburande2425@gmail.com",
-    subject: "Plabox",
-    text: "OTP for two factor Authentication",
-    html:
-      "<h3>OTP for account verification is </h3>" +
-      "<h1 style='font-weight:bold;'>" +
-      token1 +
-      "</h1>", // html body
+    to: "gauravburande2425@gmail.com", // Change to your recipient
+    from: "gauravburande04@gmail.com", // Change to your verified sender
+    subject: "Sending From Plaxbox",
+    text: "OTP for plaxbox is",
+    html: `<h1>${token1} </h1>`,
   };
 
-  mailTransporter.sendMail(mailDetails, function (err, data) {
-    if (err) {
-      console.log("Error Occurs");
-    } else {
-      console.log("Email sent successfully");
+  const sendMail = async (mailDetails) => {
+    try {
+      await sgMail.send(mailDetails);
+      console.log("Message Sent Successfully");
+    } catch (error) {
+      console.log(error);
     }
-  });
+  };
+
+  sendMail(mailDetails);
 });
 
 router.post("/api/totp-validate", (request, response, next) => {

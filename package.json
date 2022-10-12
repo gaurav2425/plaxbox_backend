@@ -9,9 +9,11 @@
   "author": "Gaurav",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-validator": "^6.12.2",
     "firebase-admin": "^10.0.1",

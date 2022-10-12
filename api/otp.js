@@ -44,9 +44,7 @@ router.post("/sendotp", (request, res) => {
     }),
   });
 
-  sgMail.setApiKey(
-    "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"
-  );
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   let mailDetails = {
     to: "gauravburande2425@gmail.com", // Change to your recipient

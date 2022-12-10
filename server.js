@@ -52,6 +52,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", require("./api/users"));
 app.use("/api/auth", require("./api/auth"));
+app.use("/api/email", require("./api/email"));
 app.use("/api/profile", require("./api/profile"));
 app.use("/api/posts", require("./api/posts"));
 app.use("/api/notification", require("./api/notification"));
@@ -96,32 +97,6 @@ io.on("connection", (socket) => {
     console.log("Disconnected Successfully SpanCock");
   });
 });
-
-// require("dotenv").config();
-
-// const sgMail = require("@sendgrid/mail");
-
-// sgMail.setApiKey(
-//   "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"
-// );
-
-const sendMail = async (msg) => {
-  try {
-    await sgMail.send(msg);
-    console.log("Message Sent Successfully");
-  } catch (error) {
-    console.log(error.errors);
-  }
-};
-
-// sendMail({
-//   to: "gauravburande2425@gmail.com", // Change to your recipient
-//   from: "gauravburande04@gmail.com", // Change to your verified sender
-//   subject: "OTP Of Plaxbox",
-//   text: "Hello from gmail email using API",
-//   html: "and easy to do anywhere, even with Node.js",
-// });
-
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

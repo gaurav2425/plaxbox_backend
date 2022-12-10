@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
+    "aws-sdk": "^2.1231.0",
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
     "cors": "^2.8.5",
@@ -24,6 +25,7 @@
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.13",
     "request": "^2.88.2",
+    "sib-api-v3-sdk": "^8.4.2",
     "socket.io": "^4.3.2",
     "socket.io-client": "^4.3.2",
     "speakeasy": "^2.0.0",

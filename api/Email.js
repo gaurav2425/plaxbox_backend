@@ -1,9 +1,10 @@
 const express = require("express");
-
+const uuid = require("uuid");
 const router = express.Router();
-
 const Sib = require("sib-api-v3-sdk");
-
+// const speakeasy = require("speakeasy");
+const { google } = require("googleapis");
+const Speakeasy = require("speakeasy");
 require("dotenv").config();
 
 const client = Sib.ApiClient.instance;
@@ -29,19 +30,30 @@ router.post("/emailverify/sendotp", async (req, res) => {
     },
   ];
 
+  let userid = uuid.v4();
+  let temp_secret = Speakeasy.generateSecret();
+  let secret1 = temp_secret.base32;
+  // we only need the base32
+  let OTP = Speakeasy.totp({ secret: secret1, encoding: "base32" });
+
   await transEmailApi
     .sendTransacEmail({
       sender,
       to: receivers,
       subject: "OTP for Plaxbox",
-      htmlContent:
-        "<html><body><h1>This is my first transactional email {{params.parameter}}</h1></body></html>",
-      textContent: `Hey Otp for Plaxbox LLC is 2249`,
+      //   htmlContent: `${(
+      //     <html>
+      //       <body>
+      //         <h1>{OTP}</h1>
+      //       </body>
+      //     </html>
+      //   )}`,
+      textContent: `Your OTP for Plaxbox is ${OTP}`,
       cc: [{ email: "gauravburande2425@gmail.com", name: "Gaurav Burande" }],
       bcc: [
         {
           email: "gauravburande2425@gmail.com",
-          name: "gauravburande2425@gmail.com",
+          name: "Gaurav Burande",
         },
       ],
       replyTo: { email: "gauravburande2425@gmail.com", name: "Gaurav Burande" },
@@ -50,12 +62,31 @@ router.post("/emailverify/sendotp", async (req, res) => {
     })
     .then((data) => {
       console.log(data);
-      res.json(data);
+      //   res.json(data);
     })
     .catch((err) => {
       console.log(err);
-      res.json(err);
+      //   res.json(err);
     });
+
+  res.json({
+    userid,
+    secret: temp_secret.base32,
+    token: Speakeasy.totp({
+      secret: secret1,
+      encoding: "base32",
+    }),
+  });
+});
+
+router.post("/emailverify/verify", (request, response, next) => {
+  let valid = Speakeasy.totp.verify({
+    secret: request.body.secret,
+    encoding: "base32",
+    token: request.body.token,
+    window: 5,
+  });
+  response.send({ valid: valid });
 });
 
 module.exports = router;

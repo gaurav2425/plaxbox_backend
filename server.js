@@ -15,12 +15,6 @@ const app = express();
 app.use(express.json());
 connectDB();
 
-// CONNECTION_URL =
-//   "mongodb+srv://admin:gaurav54321@cluster0.9mvsd.mongodb.net/SpanCock?retryWrites=true&w=majority";
-// mongoose.connect(CONNECTION_URL, () => {
-//   console.log("Connected to Database");
-// });
-
 app.get("/", (req, res) => {
   res.send("This is Home Route");
 });
@@ -78,10 +72,10 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", (socket) => {
-  console.log("New Connection SpanCock");
+  console.log("New Connection to Plaxbox");
 
   socket.on("joined", () => {
-    console.log("User Joined SpanCock");
+    console.log("User Joined to Plaxbox");
   });
 
   socket.on("message", ({ message, id, receiverId, senderId }) => {
@@ -90,13 +84,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("welcome", () => {
-    console.log("welcome to the chat SpanCock");
+    console.log("welcome to the chat Plaxbox");
   });
   socket.on("forceDisconnect", () => {
     // socket.disconnect();
-    console.log("Disconnected Successfully SpanCock");
+    console.log("Disconnected Successfully Plaxbox");
   });
 });
+
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

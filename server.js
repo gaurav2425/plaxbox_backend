@@ -47,6 +47,8 @@ app.get("/", (req, res) => {
 app.use("/api/users", require("./api/users"));
 app.use("/api/auth", require("./api/auth"));
 app.use("/api/email", require("./api/email"));
+app.use("/api/allusers", require("./api/allusers"));
+app.use("/api/follow", require("./api/follow"));
 app.use("/api/profile", require("./api/profile"));
 app.use("/api/posts", require("./api/posts"));
 app.use("/api/notification", require("./api/notification"));

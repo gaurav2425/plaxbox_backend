@@ -9,6 +9,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bio: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -22,10 +28,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  avatar: {
-    type: String,
+  validated: {
+    type: Boolean,
+    default: false,
   },
-
+  geo: {
+    type: Object,
+    // default: false,
+  },
   date: {
     type: Date,
     default: Date.now,

@@ -3,10 +3,10 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const gravatar = require("gravatar");
 const config = require("config");
 const auth = require("../middleware/auth");
 const router = express.Router();
+const geoip = require("geoip-lite");
 const Profile = require("../models/Profile");
 const { update } = require("../models/User");
 const connectDB = require("../config/db");
@@ -24,9 +24,10 @@ router.post(
   "/",
   [
     check("name", "Must Include Name").not().isEmpty(),
-    check("email", "Must Include Valid Email").isEmail(),
     check("username", "Please Enter Valid Username").not().isEmpty(),
+    check("email", "Must Include Valid Email").isEmail(),
     check("dob", "Please Enter Date of birth").not().isEmpty(),
+    check("avatar", "Please Enter Avatar").not().isEmpty(),
     check("password", "Must password").isLength({ min: 6 }),
   ],
   async (req, res) => {
@@ -36,7 +37,7 @@ router.post(
     }
     console.log(req.body);
 
-    const { name, email, password, username, bio, dob } = req.body;
+    const { name, username, bio, avatar, email, password, dob } = req.body;
 
     try {
       //See if User exists
@@ -50,19 +51,26 @@ router.post(
       if (usernameunik) {
         res.status(400).json({ errors: [{ msg: "Username already Exist" }] });
       } else {
-        const avatar = gravatar.url(email, {
-          s: "200",
-          r: "pg",
-          d: "mm",
-        });
+        var ip = "207.97.227.239";
+        // const ip =
+        //   req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+        console.log("I am Address");
+        console.log(ip); // ip address of the user
+        var geo = geoip.lookup(ip);
+        console.log(geo);
+
+        // console.log(lookup(ip));
+        console.log("I am Address");
 
         user = new User({
           name,
+          username,
+          bio,
+          avatar,
           email,
           password,
-          username,
-          avatar,
           dob,
+          geo,
         });
 
         const salt = await bcrypt.genSalt(10);
@@ -71,11 +79,11 @@ router.post(
 
         await user.save();
 
-        profileFields = { name, username, bio, dob };
-        profileFields.user = user.id;
+        // profileFields = { name, username, bio, dob };
+        // profileFields.user = user.id;
 
-        profile = new Profile(profileFields);
-        await profile.save();
+        // profile = new Profile(profileFields);
+        // await profile.save();
 
         const payload = {
           user: {

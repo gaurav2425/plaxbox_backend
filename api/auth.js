@@ -25,7 +25,8 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("email", "Must Include Valid Email").isEmail(),
+    // check("email", "Must Include Valid Email").isEmail() ||
+    //   check("username", "Must Include Valid username").exists(),
     check("password", "Password is Required").exists(),
   ],
   async (req, res) => {
@@ -40,6 +41,7 @@ router.post(
     try {
       //See if User exists
       let user = await User.findOne({ email });
+
       if (!user) {
         res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
       }

@@ -15,4 +15,4 @@ const FollowingSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Profile = mongoose.model("following", FollowingSchema);
+module.exports = Following = mongoose.model("following", FollowingSchema);

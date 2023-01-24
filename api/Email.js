@@ -79,7 +79,7 @@ router.post("/emailverify/sendotp", async (req, res) => {
   });
 });
 
-router.post("/emailverify/verify", (request, response, next) => {
+router.post("/emailverify/verify", (request, response) => {
   let valid = Speakeasy.totp.verify({
     secret: request.body.secret,
     encoding: "base32",

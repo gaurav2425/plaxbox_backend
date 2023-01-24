@@ -59,7 +59,6 @@ app.use("/api/otp", require("./api/otp"));
 
 app.post("/messages/new", (req, res) => {
   const dbMessage = req.body;
-
   // Messages.create(dbMessage, (err, data) => {
   //   if (err) {
   //     res.status(500).send(err);
